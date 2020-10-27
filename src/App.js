@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import * as api from './api/apiService';
+import GradesControl from './components/GradesControl';
 import Spinner from './components/Spinner';
 export default function App() {
   const [allGrades, setAllGrades] = useState([]);
@@ -16,11 +17,24 @@ export default function App() {
     getGrades();
   }, []);
 
+  const handleDelete = () => {
+    console.log('handleDelete');
+  };
+  const handlePersist = () => {
+    console.log('handlePersist');
+  };
   return (
     <div>
       <h1 className="center">Controle de Notas</h1>
-      {allGrades.length > 0 && <p>Notas Diponiveis</p>}
+
       {allGrades.length == 0 && <Spinner />}
+      {allGrades.length > 0 && (
+        <GradesControl
+          grades={allGrades}
+          onDelete={handleDelete}
+          onPersist={handlePersist}
+        />
+      )}
     </div>
   );
 }
