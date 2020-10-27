@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://locahost:3001/grade/';
+const API_URL = 'http://localhost:3001/grade';
 const GRADE_VALIDATION = [
   {
     id: 1,
@@ -21,3 +21,19 @@ const GRADE_VALIDATION = [
     maxValue: 50,
   },
 ];
+
+async function getAllGrandes() {
+  const res = await axios.get(API_URL);
+  const grades = res.data.grades.map((grade) => {
+    const { student, subject, type } = grade;
+    return {
+      ...grade,
+      studentLowerCase: student.toLowerCase(),
+      subjectLowerCase: subject.toLowerCase(),
+      typeLowerCase: type.toLowerCase(),
+    };
+  });
+  return grades;
+}
+
+export { getAllGrandes };
