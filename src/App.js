@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import * as api from './api/apiService';
+import Spinner from './components/Spinner';
 export default function App() {
   const [allGrades, setAllGrades] = useState([]);
   const [selectedGrade, setSelectedGrade] = useState({});
@@ -8,7 +9,9 @@ export default function App() {
   useEffect(() => {
     const getGrades = async () => {
       const grades = await api.getAllGrades();
-      setAllGrades(grades);
+      setTimeout(() => {
+        setAllGrades(grades);
+      }, 2000);
     };
     getGrades();
   }, []);
@@ -17,7 +20,7 @@ export default function App() {
     <div>
       <h1 className="center">Controle de Notas</h1>
       {allGrades.length > 0 && <p>Notas Diponiveis</p>}
-      {allGrades.length == 0 && <p>Carregando..</p>}
+      {allGrades.length == 0 && <Spinner />}
     </div>
   );
 }
